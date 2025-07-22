@@ -1,0 +1,105 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial, sans-serif;
+    background-color: #8DAA91;
+    align-items: center;
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+    color: #28112B;
+    font-size: 3rem;
+    margin: 2vmin 0;
+}
+
+.container{
+    height: 90vh;
+    margin: 1vmin;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center ;
+    align-items: center;
+}
+
+.game{
+    width : 80vmin;
+    height: 80vmin;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center ;
+    gap: 1.5vmin;
+    padding: 5vmin;
+    align-items: center;
+}
+
+.box{
+    width: 18vmin;
+    height: 18vmin;
+    padding: 11vmin;
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    border: none;
+    font-size: 8vmin;
+    justify-content: center;
+    align-items: center;
+    color: #cb2121;
+    background-color: azure;
+}
+
+.reset{
+    width: 20vmin;
+    height: 5vmin;
+    border-radius: 10px;
+    border: none;
+    background-color: #cb2121;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.msg-container {
+    top: 50%;
+    left: 50%;
+    text-align: center;
+}
+#msg {
+    font-size: 3rem;
+    color: #28112B;
+    font-weight: bold;
+}
+#play-again-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #cb2121;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hide {
+    display: none;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    color: rgb(16, 14, 14);
+    padding: 10px 0;
+}
+
+#footer-text {
+    margin: 0;
+    font-size: 1rem;
+    text-align: right;
+}
