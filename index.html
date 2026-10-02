@@ -8,24 +8,30 @@
 </head>
 <body>
     <div class ="msg-container hide">
-        <p id ="msg">Winner</p>
-        <button id="play-again-btn">Play Again</button>
+        <p id ="msg" data-testid="result-msg">Winner</p>
+        <button id="new-round-btn" data-testid="new-round-btn">New Round</button>
     </div>
     <main>
         <h1>Tic Tac Toe</h1>
+        <p id="turn-indicator" data-testid="turn-indicator">Player O's turn</p>
+        <div class="scoreboard" data-testid="scoreboard">
+            <span>O: <strong id="score-o">0</strong></span>
+            <span>X: <strong id="score-x">0</strong></span>
+            <span>Draws: <strong id="score-draw">0</strong></span>
+        </div>
         <div class="container">
             <div class="game">
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
-               <button class="box"></button>
+               <button class="cell" data-cell="0"></button>
+               <button class="cell" data-cell="1"></button>
+               <button class="cell" data-cell="2"></button>
+               <button class="cell" data-cell="3"></button>
+               <button class="cell" data-cell="4"></button>
+               <button class="cell" data-cell="5"></button>
+               <button class="cell" data-cell="6"></button>
+               <button class="cell" data-cell="7"></button>
+               <button class="cell" data-cell="8"></button>
             </div>
-            <button class="reset">Reset Game</button>
+            <button class="reset" id="reset-btn" data-testid="reset-btn">Reset Scores</button>
         </div>
     </main>
     <footer id="footer">

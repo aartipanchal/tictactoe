@@ -1,81 +1,58 @@
-let boxes = document.querySelectorAll('.box');
-let resetButton = document.querySelector('.reset');
-let msgContainer = document.querySelector('.msg-container');
-let msg = document.querySelector('#msg');
-let playAgain = document.querySelector('#play-again-btn');
-
+const cells = document.querySelectorAll('.cell');
+const resetButton = document.querySelector('#reset-btn');
+const msgContainer = document.querySelector('.msg-container');
+const msg = document.querySelector('#msg');
+const newRoundBtn = document.querySelector('#new-round-btn');
+const turnIndicator = document.querySelector('#turn-indicator');
+const scoreEls = { O: document.querySelector('#score-o'), X: document.querySelector('#score-x'), draw: document.querySelector('#score-draw') };
+const scores = { O: 0, X: 0, draw: 0 };
 let turnO = true;
-
-const winnerCombos = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
-
-boxes.forEach(box => {
-    box.addEventListener('click', () => {
-        if (turnO == true) {
-            box.innerText = 'O';
-            turnO = false;
-        } else {
-            box.innerText = 'X';
-            turnO = true;
-        }
-        box.disabled = true;
-        checkWinner();
-    });
-});
-
-printWinner = (winner) => { 
+let gameOver = false;
+const winnerCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const currentPlayer = () => (turnO ? 'O' : 'X');
+const updateTurnIndicator = () => { turnIndicator.innerText = `Player ${currentPlayer()}'s turn`; };
+const updateScores = () => { scoreEls.O.innerText = scores.O; scoreEls.X.innerText = scores.X; scoreEls.draw.innerText = scores.draw; };
+const showResult = (text) => {
+    gameOver = true;
+    msg.innerText = text;
+    msgContainer.classList.remove('hide');
     msgContainer.style.display = 'block';
-    msg.innerText = `Congratulations!! Player ${winner} wins!`;
-    msg.classList.remove('hide');
-    boxes.forEach(box => {
-        box.disabled = true;
-    });
-}
-playAgain.addEventListener('click', () => {
-    boxes.forEach(box => {
-        box.innerText = '';
-        box.disabled = false;
-    });
-    msgContainer.style.display = 'none';
-    msg.classList.add('hide');
-});
-resetButton.addEventListener('click', () => {
-    boxes.forEach(box => {
-        box.innerText = '';
-        box.disabled = false;
-    });
-    msgContainer.style.display = 'none';
-    msg.classList.add('hide');
-    turnO = true;
-});
-checkWinner = () => {
-    for (let pattern of winnerCombos) {
-        let pos1value = boxes[pattern[0]].innerText;
-        let pos2value = boxes[pattern[1]].innerText;
-        let pos3value = boxes[pattern[2]].innerText;
-
-        if (pos1value != "" && pos2value != "" && pos3value != "" ) {
-            if (pos1value == pos2value && pos2value == pos3value) {
-                console.log(`Player ${pos1value} wins!`);
-                printWinner(pos1value);
-            }
-
-        else if (Array.from(boxes).every(box => box.innerText !== '')) {
-            msgContainer.style.display = 'block';
-            msg.innerText = "It's a draw!";
-            msg.classList.remove('hide');
-            boxes.forEach(box => {
-                box.disabled = true;
-            });
+    cells.forEach(cell => (cell.disabled = true));
+    turnIndicator.innerText = 'Game over';
+};
+const checkWinner = () => {
+    for (const pattern of winnerCombos) {
+        const [a, b, c] = pattern.map(i => cells[i].innerText);
+        if (a && a === b && b === c) {
+            pattern.forEach(i => cells[i].classList.add('win'));
+            scores[a] += 1; updateScores();
+            showResult(`Player ${a} wins!`);
+            return true;
         }
     }
-}
-}
+    if (Array.from(cells).every(cell => cell.innerText !== '')) {
+        scores.draw += 1; updateScores();
+        showResult("It's a draw!");
+        return true;
+    }
+    return false;
+};
+const clearBoard = () => {
+    cells.forEach(cell => { cell.innerText = ''; cell.disabled = false; cell.classList.remove('win'); });
+    msgContainer.style.display = 'none';
+    msgContainer.classList.add('hide');
+    turnO = true; gameOver = false;
+    updateTurnIndicator();
+};
+cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+        if (gameOver || cell.innerText) return;
+        cell.innerText = currentPlayer();
+        cell.disabled = true;
+        if (!checkWinner()) { turnO = !turnO; updateTurnIndicator(); }
+    });
+});
+newRoundBtn.addEventListener('click', clearBoard);
+resetButton.addEventListener('click', () => { scores.O = 0; scores.X = 0; scores.draw = 0; updateScores(); clearBoard(); });
+updateTurnIndicator();
+updateScores();
