@@ -26,13 +26,13 @@ const checkWinner = () => {
         if (a && a === b && b === c) {
             pattern.forEach(i => cells[i].classList.add('win'));
             scores[a] += 1; updateScores();
-            showResult(`Player ${a} takes the round!`);
+            showResult(`Winner: Player ${a}`);
             return true;
         }
     }
     if (Array.from(cells).every(cell => cell.innerText !== '')) {
         scores.draw += 1; updateScores();
-        showResult("No winner this time!");
+        showResult("Match tied!");
         return true;
     }
     return false;
