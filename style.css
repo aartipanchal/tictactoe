@@ -39,7 +39,7 @@ h1{
     align-items: center;
 }
 
-.box{
+.cell{
     width: 18vmin;
     height: 18vmin;
     padding: 11vmin;
@@ -102,3 +102,7 @@ h1{
     font-size: 1rem;
     text-align: right;
 }
+
+#turn-indicator { font-size: 1.5rem; color: #28112B; margin-bottom: 1vmin; }
+.scoreboard { display: flex; justify-content: center; gap: 4vmin; font-size: 1.2rem; color: #28112B; }
+.cell.win { background-color: #ffd54f; }
