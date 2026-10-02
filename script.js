@@ -6,7 +6,7 @@ const newRoundBtn = document.querySelector('#new-round-btn');
 const turnIndicator = document.querySelector('#turn-indicator');
 const scoreEls = { O: document.querySelector('#score-o'), X: document.querySelector('#score-x'), draw: document.querySelector('#score-draw') };
 const scores = { O: 0, X: 0, draw: 0 };
-let turnO = true;
+let turnO = false;
 let gameOver = false;
 const winnerCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 const currentPlayer = () => (turnO ? 'O' : 'X');
@@ -26,13 +26,13 @@ const checkWinner = () => {
         if (a && a === b && b === c) {
             pattern.forEach(i => cells[i].classList.add('win'));
             scores[a] += 1; updateScores();
-            showResult(`Player ${a} wins!`);
+            showResult(`Winner: Player ${a}`);
             return true;
         }
     }
     if (Array.from(cells).every(cell => cell.innerText !== '')) {
         scores.draw += 1; updateScores();
-        showResult("It's a draw!");
+        showResult("Match tied!");
         return true;
     }
     return false;
@@ -41,7 +41,7 @@ const clearBoard = () => {
     cells.forEach(cell => { cell.innerText = ''; cell.disabled = false; cell.classList.remove('win'); });
     msgContainer.style.display = 'none';
     msgContainer.classList.add('hide');
-    turnO = true; gameOver = false;
+    turnO = false; gameOver = false;
     updateTurnIndicator();
 };
 cells.forEach(cell => {
